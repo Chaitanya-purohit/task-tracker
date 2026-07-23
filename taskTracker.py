@@ -74,5 +74,24 @@ elif command == "update":
                 t["updatedAt"] = datetime.now().isoformat()
         save_tasks(tasks)
         print("Update successful")
-
+elif (command == "mark-in-progress" or command == "mip" or command == "m-i-p"):
+    tasks = load_tasks()
+    if len(sys.argv) >= 3:
+        id = int(sys.argv[2])
+        for t in tasks:
+            if t["id"] == id:
+                t["status"] = "in-progress"
+                t["updatedAt"] = datetime.now().isoformat()
+        save_tasks(tasks)
+        print("Update successful")
+elif (command == "mark-done" or command == "md" or command == "m-d"):
+    tasks = load_tasks()
+    if len(sys.argv) >= 3:
+        id = int(sys.argv[2])
+        for t in tasks:
+            if t["id"] == id:
+                t["status"] = "done"
+                t["updatedAt"] = datetime.now().isoformat()
+        save_tasks(tasks)
+        print("Update successful")
 
