@@ -21,7 +21,7 @@ if len(sys.argv) < 2:
     print("Usage: python taskTracker.py <command> [args]")
     sys.exit(1)
 
-command = sys.argv[1]
+command = sys.argv[1].lower()
 
 if command == "add":
     description = sys.argv[2]
@@ -55,5 +55,24 @@ elif command == "list":
     else: 
         for ta in l:
             print(f"[{ta['id']}] {ta['description']} - {ta['status']}")
+elif command == "delete":
+    tasks = load_tasks()
+    if len(sys.argv) == 3:
+          id = int(sys.argv[2])
+          tasks = [t for t in tasks if t["id"] != id]
+          save_tasks(tasks)
+          print(f"Task {id} deleted successfully")
+    else: 
+        print("Incorrect use case")
+elif command == "update":
+    tasks = load_tasks()
+    if len(sys.argv) >= 4:
+        id = int(sys.argv[2])
+        for t in tasks:
+            if t["id"] == id:
+                t["description"] = sys.argv[3]
+                t["updatedAt"] = datetime.now().isoformat()
+        save_tasks(tasks)
+        print("Update successful")
 
-        
+
